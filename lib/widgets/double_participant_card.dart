@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'participant_card.dart';
 
-class DoubleParticipantCard extends StatelessWidget {
-  const DoubleParticipantCard({
+class DoubleParticipantCard extends StatefulWidget {
+  DoubleParticipantCard({
     super.key,
+    required this.isMicOn,
+    required this.isVideoOn,
   });
 
+  bool isMicOn;
+  bool isVideoOn;
+
+  @override
+  State<DoubleParticipantCard> createState() => _DoubleParticipantCardState();
+}
+
+class _DoubleParticipantCardState extends State<DoubleParticipantCard> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,7 +25,7 @@ class DoubleParticipantCard extends StatelessWidget {
       children: [
         ParticipantCard(
           imgUrl: 'assets/images/pfp_1.jpg',
-          isMicOn: true,
+          isMicOn: widget.isMicOn,
           isVideoOn: false,
         ),
         SizedBox(width: 4),

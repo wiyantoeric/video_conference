@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:video_conference/widgets/participant_card.dart';
 
 class SingleParticipantCard extends StatelessWidget {
-  const SingleParticipantCard({
+  SingleParticipantCard({
     super.key,
+    required this.isMicOn,
+    required this.isVideoOn,
   });
+
+  bool isMicOn;
+  bool isVideoOn;
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +19,8 @@ class SingleParticipantCard extends StatelessWidget {
         SizedBox(height: 12),
         ParticipantCard(
           imgUrl: 'assets/images/pfp_1.jpg',
-          isMicOn: true,
-          isVideoOn: false,
+          isMicOn: isMicOn,
+          isVideoOn: isVideoOn,
         ),
       ],
     );
