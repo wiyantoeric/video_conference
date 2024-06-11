@@ -14,6 +14,7 @@ class SingleParticipantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.radio),
         SizedBox(height: 12),
