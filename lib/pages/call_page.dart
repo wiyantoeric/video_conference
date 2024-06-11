@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_conference/widgets/double_participant_card.dart';
 
+import '../widgets/call_header.dart';
 import '../widgets/single_participant_card.dart';
 
 class SingleCallPage extends StatefulWidget {
@@ -48,52 +49,14 @@ class _SingleCallPageState extends State<SingleCallPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(1000),
-                      child: Image.asset(
-                        'assets/images/pfp_1.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Caller',
-                        ),
-                        Text(
-                          'Description',
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.logout),
-                  ),
-                ],
-              ),
+              CallHeader(),
               // Body
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: SingleParticipantCard(
-                        isMicOn: isMicOn,
-                        isVideoOn: isVideoOn,
-                      ),
-                    )
-                  ],
+                child: Center(
+                  child: DoubleParticipantCard(
+                    isMicOn: isMicOn,
+                    isVideoOn: isVideoOn,
+                  ),
                 ),
               ),
               // Action buttons
