@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:video_conference/model/user.dart';
+import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/temp/user_data.dart';
+import 'package:video_conference/widgets/closed_caption_card.dart';
 import 'package:video_conference/widgets/double_participant_card.dart';
-
+import '../widgets/call_action_bar.dart';
 import '../widgets/call_header.dart';
-import '../widgets/single_participant_card.dart';
 
 class SingleCallPage extends StatefulWidget {
   const SingleCallPage({super.key});
@@ -12,31 +16,6 @@ class SingleCallPage extends StatefulWidget {
 }
 
 class _SingleCallPageState extends State<SingleCallPage> {
-  bool isMicOn = false;
-  bool isVideoOn = false;
-  bool isCcOn = true;
-  bool isWriting = false;
-
-  void handleMicPress() {
-    setState(() {
-      isMicOn = !isMicOn;
-    });
-  }
-
-  void handleVideoPress() {
-    setState(() {
-      isVideoOn = !isVideoOn;
-    });
-  }
-
-  void handleCcPress() {
-    setState(() {
-      isCcOn = !isCcOn;
-    });
-  }
-
-  void handleWritePress() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,56 +32,39 @@ class _SingleCallPageState extends State<SingleCallPage> {
               // Body
               Expanded(
                 child: Center(
-                  child: DoubleParticipantCard(
-                    isMicOn: isMicOn,
-                    isVideoOn: isVideoOn,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // TODO: Uplift user into [UserProvider]
+                      DoubleParticipantCard(
+                        user1: user1,
+                        user2: user2,
+                      ),
+                      ClosedCaptionContainer(),
+                    ],
                   ),
                 ),
               ),
               // Action buttons
-              Container(
-                height: 120,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    isMicOn
-                        ? IconButton.filledTonal(
-                            onPressed: handleMicPress,
-                            icon: Icon(Icons.mic),
-                          )
-                        : IconButton.filled(
-                            onPressed: handleMicPress,
-                            icon: Icon(Icons.mic_off),
-                          ),
-                    isVideoOn
-                        ? IconButton.filledTonal(
-                            onPressed: handleVideoPress,
-                            icon: Icon(Icons.videocam),
-                          )
-                        : IconButton.filled(
-                            onPressed: handleVideoPress,
-                            icon: Icon(Icons.videocam_off),
-                          ),
-                    isCcOn
-                        ? IconButton.filledTonal(
-                            onPressed: handleCcPress,
-                            icon: Icon(Icons.closed_caption),
-                          )
-                        : IconButton.filled(
-                            onPressed: handleCcPress,
-                            icon: Icon(Icons.closed_caption_disabled),
-                          ),
-                    IconButton.filledTonal(
-                      onPressed: handleWritePress,
-                      icon: Icon(Icons.edit_note),
-                    ),
-                  ],
-                ),
-              ),
+              CallActionBar(),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class ClosedCaptionContainer extends StatelessWidget {
+  const ClosedCaptionContainer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CallActionProvider>(builder: (context, value, child) {
+      if (value.isCaptionOn) return ClosedCaptionCard();
+      return Container();
+    });
   }
 }

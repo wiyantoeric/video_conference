@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:video_conference/model/user.dart';
 import 'package:video_conference/widgets/participant_card.dart';
 
 class SingleParticipantCard extends StatelessWidget {
   SingleParticipantCard({
     super.key,
+    required this.user,
     required this.isMicOn,
     required this.isVideoOn,
   });
 
+  final User user;
   bool isMicOn;
   bool isVideoOn;
 
@@ -19,9 +22,8 @@ class SingleParticipantCard extends StatelessWidget {
         Icon(Icons.radio),
         SizedBox(height: 12),
         ParticipantCard(
-          imgUrl: 'assets/images/pfp_1.jpg',
-          isMicOn: isMicOn,
-          isVideoOn: isVideoOn,
+          enableControl: true,
+          user: user,
         ),
       ],
     );
