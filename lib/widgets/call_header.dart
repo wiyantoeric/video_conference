@@ -6,6 +6,7 @@ class CallHeader extends StatelessWidget {
   const CallHeader({
     super.key,
     required this.name,
+    required this.onLeaveCall,
     this.description = '',
     this.imgUrl = 'assets/images/pfp_3.jpg',
   });
@@ -13,6 +14,7 @@ class CallHeader extends StatelessWidget {
   final String name;
   final String? description;
   final String? imgUrl;
+  final VoidCallback onLeaveCall;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class CallHeader extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => onLeaveCall(),
             icon: Icon(Icons.logout),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:video_conference/pages/group_call_page.dart';
 import 'package:video_conference/pages/home_page.dart';
-import 'package:video_conference/pages/call_page.dart';
+import 'package:video_conference/pages/single_call_page.dart';
 
 final router = GoRouter(
   initialLocation: '/',

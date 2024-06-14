@@ -12,3 +12,10 @@ final user2 = User(
   description: 'Available',
   imgUrl: 'assets/images/pfp_2.jpg',
 );
+
+final user3 = User(
+  uid: '3',
+  username: 'Jones',
+  description: 'Available',
+  imgUrl: 'assets/images/pfp_3.jpg',
+);

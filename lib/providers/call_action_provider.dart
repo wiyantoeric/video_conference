@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CallActionProvider extends ChangeNotifier {
   bool _isMicOn = false;
   bool _isVideoOn = false;
-  bool _isCaptionOn = true;
+  bool _isCaptionOn = false;
   bool _isWriting = false;
   bool _isCaptionFullScreen = false;
 

@@ -10,12 +10,11 @@ class CallActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Consumer<CallActionProvider>(
-              builder: (context, value, child) {
+          Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isMicOn) {
               return IconButton.filledTonal(
                 onPressed: () => value.toggleMic(),
@@ -27,8 +26,7 @@ class CallActionBar extends StatelessWidget {
               icon: Icon(Icons.mic_off),
             );
           }),
-          Consumer<CallActionProvider>(
-              builder: (context, value, child) {
+          Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isVideoOn) {
               return IconButton.filledTonal(
                 onPressed: () => value.toggleVideo(),
@@ -40,8 +38,7 @@ class CallActionBar extends StatelessWidget {
               icon: Icon(Icons.videocam_off),
             );
           }),
-          Consumer<CallActionProvider>(
-              builder: (context, value, child) {
+          Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isCaptionOn) {
               return IconButton.filledTonal(
                 onPressed: () => value.toggleCaption(),
@@ -54,7 +51,79 @@ class CallActionBar extends StatelessWidget {
             );
           }),
           IconButton.filledTonal(
-            onPressed: null,
+            onPressed: () {
+              showModalBottomSheet<void>(
+                isScrollControlled: true,
+                barrierColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return FractionallySizedBox(
+                    heightFactor: .3,
+                    child: Container(
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 20,
+                            right: 20,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.open_in_full),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(24),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 30),
+                                    child: TextFormField(
+                                      maxLines: 4,
+                                      decoration: InputDecoration(
+                                        hintText: 'Write a message',
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Wrap(
+                                      spacing: 4,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.camera_alt),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.image),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.keyboard_tab),
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.send),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
             icon: Icon(Icons.edit_note),
           ),
         ],

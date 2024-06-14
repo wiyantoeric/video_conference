@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:video_conference/model/caption.dart';
 import 'package:video_conference/model/user.dart';
@@ -6,12 +7,31 @@ import 'package:video_conference/providers/call_action_provider.dart';
 import 'package:video_conference/temp/caption_data.dart';
 import 'package:video_conference/temp/user_data.dart';
 
-class ClosedCaptionCard extends StatelessWidget {
-  const ClosedCaptionCard({
+class ClosedCaptionCard extends StatefulWidget {
+  ClosedCaptionCard({
     super.key,
   });
 
-  // TODO: Uplift
+  @override
+  State<ClosedCaptionCard> createState() => _ClosedCaptionCardState();
+}
+
+class _ClosedCaptionCardState extends State<ClosedCaptionCard> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent + 50,
+      duration: Duration(milliseconds: 0),
+      curve: Curves.linear,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +41,7 @@ class ClosedCaptionCard extends StatelessWidget {
         // Caption container
         Expanded(
           child: Container(
-            padding: EdgeInsets.fromLTRB(24, 12, 12, 12),
+            padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -50,14 +70,15 @@ class ClosedCaptionCard extends StatelessWidget {
                 ),
                 Divider(),
                 Expanded(
-                  child: ListView(
-                    children: List<Widget>.from(
-                      captions.map(
-                        (Caption caption) => UserCaptionRow(
-                          caption: caption,
-                        ),
-                      ),
-                    ),
+                  child: ListView.separated(
+                    itemCount: captions.length,
+                    reverse: true,
+                    separatorBuilder: (_, index) => const SizedBox(height: 12),
+                    itemBuilder: (_, index) {
+                      return UserCaptionRow(
+                        caption: captions[captions.length - index - 1],
+                      );
+                    },
                   ),
                 ),
               ],

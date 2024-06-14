@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/providers/call_provider.dart';
 import 'package:video_conference/router.dart';
 
 void main() {
@@ -8,6 +9,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CallActionProvider()),
+        ChangeNotifierProvider(create: (_) => CallProvider()),
       ],
       child: const VideoConferenceApp(),
     ),

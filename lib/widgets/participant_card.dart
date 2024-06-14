@@ -8,21 +8,26 @@ class ParticipantCard extends StatelessWidget {
     super.key,
     required this.enableControl,
     required this.user,
+    this.reverse = false,
   });
 
   final User user;
   bool enableControl;
+  bool reverse;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Wrap(
+      direction: Axis.vertical,
+      spacing: 12,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Text(user.username),
-        SizedBox(height: 12),
+        !reverse ? Text(user.username) : Container(),
         ProfileCallCard(
           user: user,
           isCurrentUser: enableControl,
         ),
+        reverse ? Text(user.username) : Container(),
       ],
     );
   }

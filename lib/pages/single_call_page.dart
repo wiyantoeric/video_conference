@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:video_conference/model/user.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/providers/call_provider.dart';
 import 'package:video_conference/temp/user_data.dart';
 import 'package:video_conference/widgets/closed_caption_card.dart';
 import 'package:video_conference/widgets/double_participant_card.dart';
 import '../widgets/call_action_bar.dart';
 import '../widgets/call_header.dart';
+import '../widgets/screen_share.dart';
+import 'package:go_router/go_router.dart';
 
 class SingleCallPage extends StatefulWidget {
   const SingleCallPage({super.key});
@@ -16,6 +18,11 @@ class SingleCallPage extends StatefulWidget {
 }
 
 class _SingleCallPageState extends State<SingleCallPage> {
+  _onLeaveCall(BuildContext context)  {
+     context.read<CallProvider>().toggleCall();
+    if (context.mounted) context.go('/');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +40,8 @@ class _SingleCallPageState extends State<SingleCallPage> {
                   return CallHeader(
                     name: user2.username,
                     description: user2.description,
+                    imgUrl: user2.imgUrl,
+                    onLeaveCall: () => _onLeaveCall(context),
                   );
                 }
                 return Container();
@@ -43,8 +52,18 @@ class _SingleCallPageState extends State<SingleCallPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // Screen share
+                      Expanded(
+                        flex: 2,
+                        child: ScreenShare(),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      // Participant
                       // TODO: Uplift user into [UserProvider]
                       Expanded(
+                        flex: 1,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: DoubleParticipantCard(
