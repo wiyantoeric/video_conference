@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:video_conference/model/caption.dart';
 import 'package:video_conference/model/user.dart';
+import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/temp/caption_data.dart';
 import 'package:video_conference/temp/user_data.dart';
 
 class ClosedCaptionCard extends StatelessWidget {
@@ -11,42 +15,56 @@ class ClosedCaptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          SizedBox(height: 12),
-          // Caption container
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(24, 12, 12, 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Transcript'),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.open_in_full),
+    return Column(
+      children: [
+        SizedBox(height: 12),
+        // Caption container
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(24, 12, 12, 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Transcript'),
+                    Consumer<CallActionProvider>(
+                        builder: (context, value, child) {
+                      if (value.isCaptionFullScreen) {
+                        return IconButton(
+                          onPressed: () => value.toggleCaptionFullScreen(),
+                          icon: Icon(Icons.close_fullscreen),
+                        );
+                      } else {
+                        return IconButton(
+                          onPressed: () => value.toggleCaptionFullScreen(),
+                          icon: Icon(Icons.open_in_full),
+                        );
+                      }
+                    }),
+                  ],
+                ),
+                Divider(),
+                Expanded(
+                  child: ListView(
+                    children: List<Widget>.from(
+                      captions.map(
+                        (Caption caption) => UserCaptionRow(
+                          caption: caption,
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                  Divider(),
-                  UserCaptionRow(
-                    user: user1,
-                    caption:
-                        'captioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaptioncaption',
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -54,13 +72,10 @@ class ClosedCaptionCard extends StatelessWidget {
 class UserCaptionRow extends StatelessWidget {
   const UserCaptionRow({
     super.key,
-    required this.user,
     required this.caption,
   });
 
-  final User user;
-  final String caption;
-
+  final Caption caption;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -73,7 +88,7 @@ class UserCaptionRow extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(1000),
             child: Image.asset(
-              'assets/images/pfp_1.jpg',
+              caption.user.imgUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -84,10 +99,10 @@ class UserCaptionRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(user.username),
+              Text(caption.user.username),
               SizedBox(height: 4),
               Text(
-                caption,
+                caption.text,
               ),
             ],
           ),

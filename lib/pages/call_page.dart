@@ -28,7 +28,15 @@ class _SingleCallPageState extends State<SingleCallPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              CallHeader(),
+              Consumer<CallActionProvider>(builder: (context, value, child) {
+                if (!value.isCaptionFullScreen) {
+                  return CallHeader(
+                    name: user2.username,
+                    description: user2.description,
+                  );
+                }
+                return Container();
+              }),
               // Body
               Expanded(
                 child: Center(
@@ -36,11 +44,26 @@ class _SingleCallPageState extends State<SingleCallPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // TODO: Uplift user into [UserProvider]
-                      DoubleParticipantCard(
-                        user1: user1,
-                        user2: user2,
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: DoubleParticipantCard(
+                            user1: user1,
+                            user2: user2,
+                          ),
+                        ),
                       ),
-                      ClosedCaptionContainer(),
+
+                      Consumer<CallActionProvider>(
+                          builder: (context, value, child) {
+                        if (value.isCaptionOn) {
+                          return Expanded(
+                            flex: value.isCaptionFullScreen ? 3 : 1,
+                            child: ClosedCaptionContainer(),
+                          );
+                        }
+                        return Container();
+                      }),
                     ],
                   ),
                 ),

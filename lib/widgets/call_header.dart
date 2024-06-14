@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:video_conference/model/group.dart';
+import 'package:video_conference/model/user.dart';
 
 class CallHeader extends StatelessWidget {
   const CallHeader({
     super.key,
+    required this.name,
+    this.description = '',
+    this.imgUrl = 'assets/images/pfp_3.jpg',
   });
+
+  final String name;
+  final String? description;
+  final String? imgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,7 @@ class CallHeader extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(1000),
               child: Image.asset(
-                'assets/images/pfp_1.jpg',
+                imgUrl ?? 'assets/images/pfp_3.jpg',
                 fit: BoxFit.cover,
               ),
             ),
@@ -29,12 +38,8 @@ class CallHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Caller',
-                ),
-                Text(
-                  'Description',
-                ),
+                Text(name),
+                Text(description ?? ''),
               ],
             ),
           ),
