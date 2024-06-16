@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:permission_guard/permission_guard.dart';
 import 'package:provider/provider.dart';
 import 'package:video_conference/model/user.dart';
 import 'package:video_conference/providers/user_provider.dart';
 import 'package:video_conference/temp/user_data.dart';
-import 'package:video_conference/utils/permissions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
