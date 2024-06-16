@@ -16,38 +16,50 @@ class CallActionBar extends StatelessWidget {
         children: [
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isMicOn) {
-              return IconButton.filledTonal(
+              return IconButton.filled(
                 onPressed: () => value.toggleMic(),
                 icon: Icon(Icons.mic),
               );
             }
-            return IconButton.filled(
+            return IconButton.filledTonal(
               onPressed: () => value.toggleMic(),
               icon: Icon(Icons.mic_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isVideoOn) {
-              return IconButton.filledTonal(
+              return IconButton.filled(
                 onPressed: () => value.toggleVideo(),
                 icon: Icon(Icons.videocam),
               );
             }
-            return IconButton.filled(
+            return IconButton.filledTonal(
               onPressed: () => value.toggleVideo(),
               icon: Icon(Icons.videocam_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isCaptionOn) {
-              return IconButton.filledTonal(
+              return IconButton.filled(
                 onPressed: () => value.toggleCaption(),
                 icon: Icon(Icons.closed_caption),
               );
             }
-            return IconButton.filled(
+            return IconButton.filledTonal(
               onPressed: () => value.toggleCaption(),
               icon: Icon(Icons.closed_caption_disabled),
+            );
+          }),
+          Consumer<CallActionProvider>(builder: (context, value, child) {
+            if (value.isShareScreen) {
+              return IconButton.filled(
+                onPressed: () => value.toggleShareScreen(),
+                icon: Icon(Icons.cancel_presentation),
+              );
+            }
+            return IconButton.filledTonal(
+              onPressed: () => value.toggleShareScreen(),
+              icon: Icon(Icons.present_to_all),
             );
           }),
           IconButton.filledTonal(

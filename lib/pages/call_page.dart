@@ -11,17 +11,26 @@ import '../widgets/call_header.dart';
 import '../widgets/screen_share.dart';
 import 'package:go_router/go_router.dart';
 
-class GroupCallPage extends StatefulWidget {
-  const GroupCallPage({super.key});
+class CallPage extends StatefulWidget {
+  const CallPage({super.key, required this.single});
+
+  final bool single;
 
   @override
-  State<GroupCallPage> createState() => _GroupCallPageState();
+  State<CallPage> createState() => _CallPageState();
 }
 
-class _GroupCallPageState extends State<GroupCallPage> {
+class _CallPageState extends State<CallPage> {
   _onLeaveCall(BuildContext context) {
     context.read<CallProvider>().toggleCall();
     if (context.mounted) context.go('/');
+  }
+
+  @override
+  void initState() {
+    // final status = await Permission.photos.request();
+    // debugPrint('Permission status: $status');
+    super.initState();
   }
 
   @override
@@ -54,10 +63,14 @@ class _GroupCallPageState extends State<GroupCallPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // Screen share
-                      Expanded(
-                        flex: 2,
-                        child: ScreenShare(),
-                      ),
+                      Consumer<CallActionProvider>(
+                          builder: (context, value, child) {
+                        if (!value.isShareScreen) return Container();
+                        return Expanded(
+                          flex: 2,
+                          child: ScreenShare(),
+                        );
+                      }),
 
                       const SizedBox(height: 12),
 
@@ -67,21 +80,26 @@ class _GroupCallPageState extends State<GroupCallPage> {
                         flex: 1,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: MultipleParticipantCard(
-                            users: [user1, user2, user3],
-                          ),
+                          // Return single participant Card for 1-1 call and multiple participant card for group call
+                          // TODO: Create a provider to manage participants state
+                          child: widget.single
+                              ? DoubleParticipantCard(
+                                  user1: user1,
+                                  user2: user2,
+                                )
+                              : MultipleParticipantCard(
+                                  users: [user1, user2, user3],
+                                ),
                         ),
                       ),
 
                       Consumer<CallActionProvider>(
                           builder: (context, value, child) {
-                        if (value.isCaptionOn) {
-                          return Expanded(
-                            flex: value.isCaptionFullScreen ? 3 : 1,
-                            child: ClosedCaptionContainer(),
-                          );
-                        }
-                        return Container();
+                        if (!value.isCaptionOn) return Container();
+                        return Expanded(
+                          flex: value.isCaptionFullScreen ? 3 : 1,
+                          child: ClosedCaptionContainer(),
+                        );
                       }),
                     ],
                   ),

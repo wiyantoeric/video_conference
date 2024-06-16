@@ -6,12 +6,14 @@ class CallActionProvider extends ChangeNotifier {
   bool _isCaptionOn = false;
   bool _isWriting = false;
   bool _isCaptionFullScreen = false;
+  bool _isShareScreen = false;
 
   bool get isMicOn => _isMicOn;
   bool get isVideoOn => _isVideoOn;
   bool get isCaptionOn => _isCaptionOn;
   bool get isWriting => _isWriting;
   bool get isCaptionFullScreen => _isCaptionFullScreen;
+  bool get isShareScreen => _isShareScreen;
 
   void toggleMic() {
     _isMicOn = !_isMicOn;
@@ -32,6 +34,11 @@ class CallActionProvider extends ChangeNotifier {
 
   void toggleCaptionFullScreen() {
     _isCaptionFullScreen = !_isCaptionFullScreen;
+    notifyListeners();
+  }
+
+  void toggleShareScreen() {
+    _isShareScreen = !_isShareScreen;
     notifyListeners();
   }
 }

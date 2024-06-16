@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:video_conference/pages/group_call_page.dart';
+import 'package:video_conference/pages/call_page.dart';
 import 'package:video_conference/pages/home_page.dart';
-import 'package:video_conference/pages/single_call_page.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -12,11 +11,11 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/call/single',
-      builder: (context, state) => const SingleCallPage(),
+      builder: (context, state) => const CallPage(single: true),
     ),
     GoRoute(
       path: '/call/group',
-      builder: (context, state) => const GroupCallPage(),
+      builder: (context, state) => const CallPage(single: false),
     ),
   ],
 );

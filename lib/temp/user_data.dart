@@ -6,6 +6,7 @@ final user1 = User(
   description: 'Available',
   imgUrl: 'assets/images/pfp_1.jpg',
 );
+
 final user2 = User(
   uid: '2',
   username: 'Cole',
