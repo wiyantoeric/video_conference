@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:video_conference/model/caption.dart';
-import 'package:video_conference/model/user.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
 import 'package:video_conference/temp/caption_data.dart';
-import 'package:video_conference/temp/user_data.dart';
+
+import 'user_caption_row.dart';
 
 class ClosedCaptionCard extends StatefulWidget {
   ClosedCaptionCard({
@@ -83,49 +81,6 @@ class _ClosedCaptionCardState extends State<ClosedCaptionCard> {
                 ),
               ],
             ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UserCaptionRow extends StatelessWidget {
-  const UserCaptionRow({
-    super.key,
-    required this.caption,
-  });
-
-  final Caption caption;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Pfp
-        SizedBox(
-          width: 24,
-          height: 36,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(1000),
-            child: Image.asset(
-              caption.user.imgUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        SizedBox(width: 12),
-        // Caption row
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(caption.user.username),
-              SizedBox(height: 4),
-              Text(
-                caption.text,
-              ),
-            ],
           ),
         ),
       ],

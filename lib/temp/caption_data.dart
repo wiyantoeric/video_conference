@@ -1,5 +1,4 @@
 import 'package:video_conference/model/caption.dart';
-import 'package:video_conference/model/user.dart';
 import 'package:video_conference/temp/user_data.dart';
 
 final captions = <Caption>[

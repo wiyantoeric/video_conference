@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_conference/model/group.dart';
-import 'package:video_conference/model/user.dart';
 
 class CallHeader extends StatelessWidget {
   const CallHeader({

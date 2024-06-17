@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:video_conference/model/user.dart';
-import 'package:video_conference/providers/user_provider.dart';
 import 'package:video_conference/temp/user_data.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +14,15 @@ class _HomePageState extends State<HomePage> {
 
   bool validateUsername(String username) {
     return username.isNotEmpty;
+  }
+
+  void showAlert(BuildContext context, String message) {
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Please enter your username'),
+      ),
+    );
   }
 
   @override
@@ -51,11 +57,7 @@ class _HomePageState extends State<HomePage> {
                     child: FilledButton(
                       onPressed: () {
                         if (!validateUsername(_usernameController.text)) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Please enter a valid username'),
-                            ),
-                          );
+                          showAlert(context, 'Please enter your username');
                           return;
                         }
 
@@ -70,11 +72,7 @@ class _HomePageState extends State<HomePage> {
                     child: FilledButton(
                       onPressed: () {
                         if (!validateUsername(_usernameController.text)) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Please enter a valid username'),
-                            ),
-                          );
+                          showAlert(context, 'Please enter your username');
                           return;
                         }
 

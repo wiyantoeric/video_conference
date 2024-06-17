@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:video_conference/model/caption.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/providers/call_provider.dart';
+import 'package:video_conference/temp/user_data.dart';
+import 'package:video_conference/widgets/user_caption_row.dart';
 
-class CallActionBar extends StatelessWidget {
+class CallActionBar extends StatefulWidget {
   const CallActionBar({
     super.key,
   });
 
+  @override
+  State<CallActionBar> createState() => _CallActionBarState();
+}
+
+class _CallActionBarState extends State<CallActionBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,67 +73,120 @@ class CallActionBar extends StatelessWidget {
           }),
           IconButton.filledTonal(
             onPressed: () {
-              showModalBottomSheet<void>(
-                isScrollControlled: true,
-                barrierColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return FractionallySizedBox(
-                    heightFactor: .3,
-                    child: Container(
-                      width: double.infinity,
-                      child: Stack(
+              // Show modal bottom sheet on click
+              buildModalBottomSheet(context);
+            },
+            icon: Icon(Icons.edit_note),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> buildModalBottomSheet(BuildContext context) {
+    final chatController = TextEditingController();
+    bool isExpanded = false;
+
+    return showModalBottomSheet<void>(
+      isScrollControlled: true,
+      barrierColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return FractionallySizedBox(
+              heightFactor: isExpanded ? .8 : .3,
+              child: Container(
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    // Chat container, opened on maximise icon clicked
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Positioned(
-                            top: 20,
-                            right: 20,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.open_in_full),
+                          // Chat log
+                          isExpanded
+                              ? Expanded(
+                                  child: ListView(
+                                    children: [
+                                      Consumer<CallProvider>(
+                                        builder: (context, value, child) {
+                                          return Column(
+                                            children: [
+                                              ...List<Widget>.from(
+                                                value.chats.map(
+                                                  (chat) {
+                                                    return Column(
+                                                      children: [
+                                                        UserCaptionRow(
+                                                          caption: Caption(
+                                                            user: chat.user,
+                                                            text: chat.text,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 12),
+                                                      ],
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
+                          // Chat input box
+                          isExpanded ? Divider() : Container(),
+                          Padding(
+                            padding: EdgeInsets.only(right: 30),
+                            child: TextFormField(
+                              controller: chatController,
+                              maxLines: 4,
+                              decoration: InputDecoration(
+                                hintText: 'Write a message',
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(24),
-                            child: Column(
+                          // Chat action bar
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 30),
-                                    child: TextFormField(
-                                      maxLines: 4,
-                                      decoration: InputDecoration(
-                                        hintText: 'Write a message',
-                                        border: InputBorder.none,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Wrap(
+                                  spacing: 4,
                                   children: [
-                                    Wrap(
-                                      spacing: 4,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.camera_alt),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.image),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.keyboard_tab),
-                                        ),
-                                      ],
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.camera_alt),
                                     ),
                                     IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.send),
+                                      icon: Icon(Icons.image),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.keyboard_tab),
                                     ),
                                   ],
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (!context.mounted) return;
+                                    // TODO: Manage main user
+                                    context.read<CallProvider>().sendChat(
+                                          user1,
+                                          chatController.text,
+                                        );
+                                    chatController.clear();
+                                  },
+                                  icon: Icon(Icons.send),
                                 ),
                               ],
                             ),
@@ -132,14 +194,28 @@ class CallActionBar extends StatelessWidget {
                         ],
                       ),
                     ),
-                  );
-                },
-              );
-            },
-            icon: Icon(Icons.edit_note),
-          ),
-        ],
-      ),
+                    Positioned(
+                      top: 20,
+                      right: 20,
+                      child: IconButton(
+                        onPressed: () => {
+                          // Toggle open and close chat container
+                          setState(() {
+                            isExpanded = !isExpanded;
+                          }),
+                        },
+                        icon: isExpanded
+                            ? Icon(Icons.close_fullscreen)
+                            : Icon(Icons.open_in_full),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
