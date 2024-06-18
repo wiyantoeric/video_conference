@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_conference/model/user.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
+import 'package:video_conference/widgets/camera_capture.dart';
 import 'package:video_conference/widgets/participant_card.dart';
 
 class ProfileCallCard extends StatelessWidget {
@@ -30,11 +31,15 @@ class ProfileCallCard extends StatelessWidget {
             */
             return Stack(
               children: [
-                Image.asset(
-                  user.imgUrl,
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                ),
+                isCurrentUser && value.isVideoOn
+                    ? ConstrainedBox(
+                        constraints: BoxConstraints.expand(),
+                        child: CameraCapture())
+                    : Image.asset(
+                        user.imgUrl,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                      ),
                 // Control mute backdrop for current user
                 isCurrentUser && !value.isMicOn
                     ? MutedBackdrop()
