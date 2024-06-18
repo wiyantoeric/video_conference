@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CameraCapture extends StatefulWidget {
   const CameraCapture({super.key});
-  // TODO: Stream video data from cloud
+  // TODO: Stream video with LiveKit
 
   @override
   State<CameraCapture> createState() => _CameraCaptureState();

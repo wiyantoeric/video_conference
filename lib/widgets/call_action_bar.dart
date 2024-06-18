@@ -25,21 +25,23 @@ class _CallActionBarState extends State<CallActionBar> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Consumer<CallActionProvider>(builder: (context, value, child) {
+            // Turn off microphone button
             if (value.isMicOn) {
               return IconButton.filled(
                 onPressed: () => value.toggleMic(),
                 icon: Icon(Icons.mic),
               );
             }
+            // Turn off microphone button
             return IconButton.filledTonal(
               onPressed: () async {
                 var status = await Permission.microphone.status;
-                // Disable mic function if mic permission denied
                 if (!status.isGranted) {
                   status = await Permission.microphone.request();
                   return;
                 }
                 value.toggleMic();
+                // TODO: Stream audio with LiveKit
               },
               icon: Icon(Icons.mic_off),
             );
