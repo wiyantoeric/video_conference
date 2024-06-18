@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:video_conference/model/caption.dart';
 import 'package:video_conference/providers/call_action_provider.dart';
@@ -31,41 +32,63 @@ class _CallActionBarState extends State<CallActionBar> {
               );
             }
             return IconButton.filledTonal(
-              onPressed: () => value.toggleMic(),
+              onPressed: () async {
+                var status = await Permission.microphone.status;
+                // Disable mic function if mic permission denied
+                if (!status.isGranted) {
+                  status = await Permission.microphone.request();
+                  return;
+                }
+                value.toggleMic();
+              },
               icon: Icon(Icons.mic_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isVideoOn) {
+              // Turn off video button
               return IconButton.filled(
                 onPressed: () => value.toggleVideo(),
                 icon: Icon(Icons.videocam),
               );
             }
+            // Turn on video button
             return IconButton.filledTonal(
-              onPressed: () => value.toggleVideo(),
+              onPressed: () async {
+                var status = await Permission.camera.status;
+                // Disable video function if camera permission denied
+                if (!status.isGranted) {
+                  status = await Permission.camera.request();
+                  return;
+                }
+                value.toggleVideo();
+              },
               icon: Icon(Icons.videocam_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isCaptionOn) {
+              // Turn off closed caption button
               return IconButton.filled(
                 onPressed: () => value.toggleCaption(),
                 icon: Icon(Icons.closed_caption),
               );
             }
             return IconButton.filledTonal(
+              // Turn on closed caption button
               onPressed: () => value.toggleCaption(),
               icon: Icon(Icons.closed_caption_disabled),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
             if (value.isShareScreen) {
+              // Turn off closed caption button
               return IconButton.filled(
                 onPressed: () => value.toggleShareScreen(),
                 icon: Icon(Icons.cancel_presentation),
               );
             }
+            // Turn on closed caption button
             return IconButton.filledTonal(
               onPressed: () => value.toggleShareScreen(),
               icon: Icon(Icons.present_to_all),
