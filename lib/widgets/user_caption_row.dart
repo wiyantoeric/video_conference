@@ -13,7 +13,7 @@ class UserCaptionRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Pfp
+        // User profile picture
         SizedBox(
           width: 24,
           height: 36,
@@ -25,14 +25,14 @@ class UserCaptionRow extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 12),
-        // Caption row
+        const SizedBox(width: 12),
+        // Caption rows
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(caption.user.username),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 caption.text,
               ),

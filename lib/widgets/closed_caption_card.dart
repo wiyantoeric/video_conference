@@ -6,9 +6,7 @@ import 'package:video_conference/temp/caption_data.dart';
 import 'user_caption_row.dart';
 
 class ClosedCaptionCard extends StatefulWidget {
-  ClosedCaptionCard({
-    super.key,
-  });
+  const ClosedCaptionCard({super.key});
 
   @override
   State<ClosedCaptionCard> createState() => _ClosedCaptionCardState();
@@ -23,19 +21,11 @@ class _ClosedCaptionCardState extends State<ClosedCaptionCard> {
     super.dispose();
   }
 
-  void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent + 50,
-      duration: Duration(milliseconds: 0),
-      curve: Curves.linear,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         // Caption container
         Expanded(
           child: Container(
@@ -49,24 +39,24 @@ class _ClosedCaptionCardState extends State<ClosedCaptionCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Transcript'),
+                    const Text('Transcript'),
                     Consumer<CallActionProvider>(
                         builder: (context, value, child) {
                       if (value.isCaptionFullScreen) {
                         return IconButton(
                           onPressed: () => value.toggleCaptionFullScreen(),
-                          icon: Icon(Icons.close_fullscreen),
+                          icon: const Icon(Icons.close_fullscreen),
                         );
                       } else {
                         return IconButton(
                           onPressed: () => value.toggleCaptionFullScreen(),
-                          icon: Icon(Icons.open_in_full),
+                          icon: const Icon(Icons.open_in_full),
                         );
                       }
                     }),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Expanded(
                   child: ListView.separated(
                     itemCount: captions.length,

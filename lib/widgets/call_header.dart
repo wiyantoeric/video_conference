@@ -6,6 +6,7 @@ class CallHeader extends StatelessWidget {
     required this.name,
     required this.onLeaveCall,
     this.description = '',
+    // Set default image from local image
     this.imgUrl = 'assets/images/pfp_3.jpg',
   });
 
@@ -32,7 +33,7 @@ class CallHeader extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           // Group / called person description
           Expanded(
             child: Column(
@@ -45,7 +46,7 @@ class CallHeader extends StatelessWidget {
           ),
           IconButton(
             onPressed: () => onLeaveCall(),
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),

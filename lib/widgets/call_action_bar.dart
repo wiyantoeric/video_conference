@@ -8,9 +8,7 @@ import 'package:video_conference/temp/user_data.dart';
 import 'package:video_conference/widgets/user_caption_row.dart';
 
 class CallActionBar extends StatefulWidget {
-  const CallActionBar({
-    super.key,
-  });
+  const CallActionBar({super.key});
 
   @override
   State<CallActionBar> createState() => _CallActionBarState();
@@ -19,7 +17,7 @@ class CallActionBar extends StatefulWidget {
 class _CallActionBarState extends State<CallActionBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -29,7 +27,7 @@ class _CallActionBarState extends State<CallActionBar> {
             if (value.isMicOn) {
               return IconButton.filled(
                 onPressed: () => value.toggleMic(),
-                icon: Icon(Icons.mic),
+                icon: const Icon(Icons.mic),
               );
             }
             // Turn off microphone button
@@ -43,7 +41,7 @@ class _CallActionBarState extends State<CallActionBar> {
                 value.toggleMic();
                 // TODO: Stream audio with LiveKit
               },
-              icon: Icon(Icons.mic_off),
+              icon: const Icon(Icons.mic_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
@@ -51,7 +49,7 @@ class _CallActionBarState extends State<CallActionBar> {
               // Turn off video button
               return IconButton.filled(
                 onPressed: () => value.toggleVideo(),
-                icon: Icon(Icons.videocam),
+                icon: const Icon(Icons.videocam),
               );
             }
             // Turn on video button
@@ -65,7 +63,7 @@ class _CallActionBarState extends State<CallActionBar> {
                 }
                 value.toggleVideo();
               },
-              icon: Icon(Icons.videocam_off),
+              icon: const Icon(Icons.videocam_off),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
@@ -73,13 +71,13 @@ class _CallActionBarState extends State<CallActionBar> {
               // Turn off closed caption button
               return IconButton.filled(
                 onPressed: () => value.toggleCaption(),
-                icon: Icon(Icons.closed_caption),
+                icon: const Icon(Icons.closed_caption),
               );
             }
             return IconButton.filledTonal(
               // Turn on closed caption button
               onPressed: () => value.toggleCaption(),
-              icon: Icon(Icons.closed_caption_disabled),
+              icon: const Icon(Icons.closed_caption_disabled),
             );
           }),
           Consumer<CallActionProvider>(builder: (context, value, child) {
@@ -87,13 +85,13 @@ class _CallActionBarState extends State<CallActionBar> {
               // Turn off closed caption button
               return IconButton.filled(
                 onPressed: () => value.toggleShareScreen(),
-                icon: Icon(Icons.cancel_presentation),
+                icon: const Icon(Icons.cancel_presentation),
               );
             }
             // Turn on closed caption button
             return IconButton.filledTonal(
               onPressed: () => value.toggleShareScreen(),
-              icon: Icon(Icons.present_to_all),
+              icon: const Icon(Icons.present_to_all),
             );
           }),
           IconButton.filledTonal(
@@ -101,7 +99,7 @@ class _CallActionBarState extends State<CallActionBar> {
               // Show modal bottom sheet on click
               buildModalBottomSheet(context);
             },
-            icon: Icon(Icons.edit_note),
+            icon: const Icon(Icons.edit_note),
           ),
         ],
       ),
@@ -151,7 +149,8 @@ class _CallActionBarState extends State<CallActionBar> {
                                                             text: chat.text,
                                                           ),
                                                         ),
-                                                        SizedBox(height: 12),
+                                                        const SizedBox(
+                                                            height: 12),
                                                       ],
                                                     );
                                                   },
@@ -166,13 +165,13 @@ class _CallActionBarState extends State<CallActionBar> {
                                 )
                               : Container(),
                           // Chat input box
-                          isExpanded ? Divider() : Container(),
+                          isExpanded ? const Divider() : Container(),
                           Padding(
-                            padding: EdgeInsets.only(right: 30),
+                            padding: const EdgeInsets.only(right: 30),
                             child: TextFormField(
                               controller: chatController,
                               maxLines: 4,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Write a message',
                                 border: InputBorder.none,
                               ),
@@ -189,15 +188,15 @@ class _CallActionBarState extends State<CallActionBar> {
                                   children: [
                                     IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.camera_alt),
+                                      icon: const Icon(Icons.camera_alt),
                                     ),
                                     IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.image),
+                                      icon: const Icon(Icons.image),
                                     ),
                                     IconButton(
                                       onPressed: () {},
-                                      icon: Icon(Icons.keyboard_tab),
+                                      icon: const Icon(Icons.keyboard_tab),
                                     ),
                                   ],
                                 ),
@@ -211,7 +210,7 @@ class _CallActionBarState extends State<CallActionBar> {
                                         );
                                     chatController.clear();
                                   },
-                                  icon: Icon(Icons.send),
+                                  icon: const Icon(Icons.send),
                                 ),
                               ],
                             ),
@@ -230,8 +229,8 @@ class _CallActionBarState extends State<CallActionBar> {
                           }),
                         },
                         icon: isExpanded
-                            ? Icon(Icons.close_fullscreen)
-                            : Icon(Icons.open_in_full),
+                            ? const Icon(Icons.close_fullscreen)
+                            : const Icon(Icons.open_in_full),
                       ),
                     ),
                   ],

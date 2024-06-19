@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 class CallPage extends StatefulWidget {
   const CallPage({super.key, required this.single});
 
+  // Act as a flag to determine call mode (1-1 or group)
   final bool single;
 
   @override
@@ -27,19 +28,12 @@ class _CallPageState extends State<CallPage> {
   }
 
   @override
-  void initState() {
-    // final status = await Permission.photos.request();
-    // debugPrint('Permission status: $status');
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +60,7 @@ class _CallPageState extends State<CallPage> {
                       Consumer<CallActionProvider>(
                           builder: (context, value, child) {
                         if (!value.isShareScreen) return Container();
-                        return Expanded(
+                        return const Expanded(
                           flex: 2,
                           child: ScreenShare(),
                         );
@@ -75,13 +69,14 @@ class _CallPageState extends State<CallPage> {
                       const SizedBox(height: 12),
 
                       // Participant
-                      // TODO: Uplift user into [UserProvider]
+                      // TODO: Uplift user data to user controller
                       Expanded(
                         flex: 1,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           // Return single participant Card for 1-1 call and multiple participant card for group call
-                          // TODO: Create a provider to manage participants state
+                          /// TODO: Create a provider to manage participants state
+                          /// TODO: Switch widget to [SingleParticipantCard] if there is only 1 user in the room
                           child: widget.single
                               ? DoubleParticipantCard(
                                   user1: user1,
@@ -98,7 +93,7 @@ class _CallPageState extends State<CallPage> {
                         if (!value.isCaptionOn) return Container();
                         return Expanded(
                           flex: value.isCaptionFullScreen ? 3 : 1,
-                          child: ClosedCaptionContainer(),
+                          child: const ClosedCaptionContainer(),
                         );
                       }),
                     ],
@@ -106,7 +101,7 @@ class _CallPageState extends State<CallPage> {
                 ),
               ),
               // Action buttons
-              CallActionBar(),
+              const CallActionBar(),
             ],
           ),
         ),
@@ -123,7 +118,7 @@ class ClosedCaptionContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CallActionProvider>(builder: (context, value, child) {
-      if (value.isCaptionOn) return ClosedCaptionCard();
+      if (value.isCaptionOn) return const ClosedCaptionCard();
       return Container();
     });
   }

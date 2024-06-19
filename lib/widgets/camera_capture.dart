@@ -42,11 +42,11 @@ class _CameraCaptureState extends State<CameraCapture> {
         if (snapshot.connectionState == ConnectionState.done) {
           return CameraPreview(controller);
         } else if (snapshot.hasError) {
-          return Container(child: Text('error'));
+          return const Text('error');
         } else {
           return Container(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            child: Center(
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
           );

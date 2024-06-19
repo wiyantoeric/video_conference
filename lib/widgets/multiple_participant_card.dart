@@ -28,7 +28,7 @@ class _MultipleParticipantCardState extends State<MultipleParticipantCard> {
           children: List<Widget>.from(
             widget.users.take(5).map((User user) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: ParticipantCard(
                   enableControl: false,
                   user: user,

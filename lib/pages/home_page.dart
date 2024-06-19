@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                 'Username',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Enter your username',
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 controller: _usernameController,
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Row(
                 children: [
                   Expanded(
@@ -64,10 +64,10 @@ class _HomePageState extends State<HomePage> {
                         user1.username = _usernameController.text;
                         context.go('/call/single');
                       },
-                      child: Text('1-1'),
+                      child: const Text('1-1'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: FilledButton(
                       onPressed: () {
@@ -79,13 +79,13 @@ class _HomePageState extends State<HomePage> {
                         user1.username = _usernameController.text;
                         context.go('/call/group');
                       },
-                      child: Text('Group'),
+                      child: const Text('Group'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                 ],
               ),
-              SizedBox(height: 120),
+              const SizedBox(height: 120),
             ],
           ),
         ),

@@ -9,7 +9,7 @@ class ScreenShare extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
@@ -24,7 +24,7 @@ class ScreenShare extends StatelessWidget {
           right: 12,
           child: IconButton(
             onPressed: () {},
-            icon: Icon(Icons.open_in_full),
+            icon: const Icon(Icons.open_in_full),
           ),
         ),
       ],

@@ -6,18 +6,20 @@ import 'package:video_conference/widgets/camera_capture.dart';
 import 'package:video_conference/widgets/participant_card.dart';
 
 class ProfileCallCard extends StatelessWidget {
-  ProfileCallCard({
+  const ProfileCallCard({
     super.key,
     required this.user,
     required this.isCurrentUser,
   });
 
   final User user;
-  bool isCurrentUser;
+  // Differ current user among participants to allow control
+  // TODO: Uplift isCurrentUser to main user controller
+  final bool isCurrentUser;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 120,
       height: 200,
       child: ClipRRect(
@@ -33,8 +35,8 @@ class ProfileCallCard extends StatelessWidget {
               children: [
                 isCurrentUser && value.isVideoOn
                     ? ConstrainedBox(
-                        constraints: BoxConstraints.expand(),
-                        child: CameraCapture())
+                        constraints: const BoxConstraints.expand(),
+                        child: const CameraCapture())
                     : Image.asset(
                         user.imgUrl,
                         fit: BoxFit.cover,
@@ -42,7 +44,7 @@ class ProfileCallCard extends StatelessWidget {
                       ),
                 // Control mute backdrop for current user
                 isCurrentUser && !value.isMicOn
-                    ? MutedBackdrop()
+                    ? const MutedBackdrop()
                     : const SizedBox(),
                 // Show video if [isVideoOn]
                 isCurrentUser && value.isVideoOn

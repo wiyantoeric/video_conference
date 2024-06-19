@@ -1,5 +1,6 @@
 import 'package:video_conference/model/user.dart';
 
+// Temporary user data to be replaced with actual data
 final user1 = User(
   uid: '1',
   username: 'Rick',

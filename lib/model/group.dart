@@ -1,4 +1,3 @@
-// create a group model that has name, desc, and users
 import 'package:video_conference/model/user.dart';
 
 class Group {

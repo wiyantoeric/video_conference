@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
+// State manager of call actions including mic, video, caption, caption full screen mode, and screen share
 class CallActionProvider extends ChangeNotifier {
   bool _isMicOn = false;
   bool _isVideoOn = false;
   bool _isCaptionOn = false;
-  bool _isWriting = false;
   bool _isCaptionFullScreen = false;
   bool _isShareScreen = false;
 
   bool get isMicOn => _isMicOn;
   bool get isVideoOn => _isVideoOn;
   bool get isCaptionOn => _isCaptionOn;
-  bool get isWriting => _isWriting;
   bool get isCaptionFullScreen => _isCaptionFullScreen;
   bool get isShareScreen => _isShareScreen;
 

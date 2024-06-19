@@ -3,6 +3,7 @@ import 'package:video_conference/model/caption.dart';
 import 'package:video_conference/model/user.dart';
 import 'package:video_conference/temp/user_data.dart';
 
+// State manager of in call room state including participants and chat
 class CallProvider extends ChangeNotifier {
   final List<User> _participants = [];
   final List<Caption> _chats = [Caption(user: user1, text: 'hi')];
@@ -30,7 +31,6 @@ class CallProvider extends ChangeNotifier {
 
   void sendChat(User user, String message) {
     if (message.isEmpty) return;
-    print(_chats);
     _chats.add(Caption(user: user, text: message));
     notifyListeners();
   }

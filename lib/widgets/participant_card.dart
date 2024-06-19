@@ -4,7 +4,7 @@ import 'package:video_conference/model/user.dart';
 import 'profile_call_card.dart';
 
 class ParticipantCard extends StatelessWidget {
-  ParticipantCard({
+  const ParticipantCard({
     super.key,
     required this.enableControl,
     required this.user,
@@ -12,8 +12,8 @@ class ParticipantCard extends StatelessWidget {
   });
 
   final User user;
-  bool enableControl;
-  bool reverse;
+  final bool enableControl;
+  final bool reverse;
 
   @override
   Widget build(BuildContext context) {
