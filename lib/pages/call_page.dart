@@ -83,7 +83,7 @@ class _CallPageState extends State<CallPage> {
                                   user2: user2,
                                 )
                               : MultipleParticipantCard(
-                                  users: [user1, user2, user3],
+                                  users: [user2, user3, user2, user3],
                                 ),
                         ),
                       ),

@@ -25,8 +25,13 @@ class _MultipleParticipantCardState extends State<MultipleParticipantCard> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List<Widget>.from(
-            widget.users.take(5).map((User user) {
+          children: [
+            ParticipantCard(
+              enableControl: true,
+              user: widget.users[0],
+              reverse: true,
+            ),
+            ...widget.users.take(4).map((User user) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: ParticipantCard(
@@ -36,7 +41,7 @@ class _MultipleParticipantCardState extends State<MultipleParticipantCard> {
                 ),
               );
             }),
-          ),
+          ],
         ),
       ],
     );
