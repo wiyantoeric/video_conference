@@ -2,6 +2,10 @@
 
 Welcome to the Video Conference App! This application provides a comprehensive solution for virtual meetings, including features such as audio calls, video calls, screen sharing, automatic audio transcription, and in-call messaging.
 
+## Demo
+
+[![App demo](https://img.youtube.com/vi/s3qKeYvS8Pc/0.jpg)](https://youtu.be/s3qKeYvS8Pc)
+
 ## Installation
 
 To install the Video Conference App, follow these steps:
